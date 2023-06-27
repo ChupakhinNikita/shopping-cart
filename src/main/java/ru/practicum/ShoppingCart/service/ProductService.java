@@ -1,4 +1,11 @@
 package ru.practicum.ShoppingCart.service;
 
-public class ProductService {
+import ru.practicum.ShoppingCart.model.Product;
+
+import java.util.List;
+
+public interface ProductService {
+
+    // Возможность вывести все товары, которые есть в наличие
+    List<Product> getAllProductsInStock();
 }

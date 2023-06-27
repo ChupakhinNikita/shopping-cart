@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>asdasdas</p>
+  <div th:each="el : ${customers}">
+        <h3 th:text="${el.id}" />
+      <h3 th:text="${el.names}" />
+      <h3 th:text="${el.surname}" />
+      <h3 th:text="${el.address}" />
+      <h3 th:text="${el.email}" />
+      <h3 th:text="${el.phone}" />
+    </div>
+</body>
+</html>
