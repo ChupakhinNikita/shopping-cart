@@ -46,19 +46,6 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 
-
-
-
-<!--
-		&lt;!&ndash; Зависимость для MapStruct &ndash;&gt;
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>${org.mapstruct.version}</version>
-		</dependency>
--->
-
-
 		<!-- Зависимость для Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -69,7 +56,21 @@
 
 
 		<!-- Зависимость для Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 
+
+		<!--
+                &lt;!&ndash; Зависимость для MapStruct &ndash;&gt;
+                <dependency>
+                    <groupId>org.mapstruct</groupId>
+                    <artifactId>mapstruct</artifactId>
+                    <version>${org.mapstruct.version}</version>
+                </dependency>
+        -->
 	</dependencies>
 
 	<build>
@@ -98,7 +99,6 @@
 				</configuration>
 			</plugin>
 -->
-
 		</plugins>
 	</build>
 

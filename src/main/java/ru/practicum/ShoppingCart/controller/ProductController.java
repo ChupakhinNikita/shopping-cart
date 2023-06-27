@@ -1,5 +1,7 @@
 package ru.practicum.ShoppingCart.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
+@Api(tags = "Product Rest Controller")
 public class ProductController {
     private final ProductService productService;
 
@@ -18,8 +21,8 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // Возможность вывести все товары, которые есть в наличие
     @GetMapping
+    @ApiOperation(value = "Получение всех доступных товаров", notes = "Возможность вывести все товары, которые есть в наличие")
     public List<Product> getAllProducts() {
 
         List<Product> resultProducts = productService.getAllProductsInStock();

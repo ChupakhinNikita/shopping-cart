@@ -1,5 +1,6 @@
 package ru.practicum.ShoppingCart.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "customer")
+@ApiModel(description = "Покупатель")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
