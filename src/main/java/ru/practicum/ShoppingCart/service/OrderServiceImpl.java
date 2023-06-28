@@ -10,6 +10,10 @@ import ru.practicum.ShoppingCart.repository.CustomerRepository;
 import ru.practicum.ShoppingCart.repository.OrderRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -84,4 +88,14 @@ public class OrderServiceImpl implements OrderService{
 
         return order;
     }
+
+    public List<Order> getOrdersByDateRange(LocalDate startDate, LocalDate endDate) {
+        log.info("Получение заказов по диапазону дат: {} - {}", startDate, endDate);
+
+        Date startDateTime = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date endDateTime = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        return orderRepository.findByOrderDateBetween(startDateTime, endDateTime);
+    }
+
 }
