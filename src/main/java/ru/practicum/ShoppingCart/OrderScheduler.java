@@ -3,13 +3,11 @@ package ru.practicum.ShoppingCart;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.practicum.ShoppingCart.model.Order;
 import ru.practicum.ShoppingCart.model.OrderDetail;
 import ru.practicum.ShoppingCart.repository.OrderDetailRepository;
-import ru.practicum.ShoppingCart.service.OrderDetailService;
 import ru.practicum.ShoppingCart.service.OrderService;
 
 import java.math.BigDecimal;

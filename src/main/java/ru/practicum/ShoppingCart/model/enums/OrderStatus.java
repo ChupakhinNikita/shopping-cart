@@ -1,7 +1,7 @@
 package ru.practicum.ShoppingCart.model.enums;
 
 public enum OrderStatus {
-    CREATED,
+    CREDIT_CARD,
     PROCESSING,
     CANCELLED,
     SHIPPED;
