@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ShoppingCart.dto.OrderDTO;
+import ru.practicum.ShoppingCart.mapper.OrderMapper;
 import ru.practicum.ShoppingCart.model.Order;
 import ru.practicum.ShoppingCart.model.enums.OrderStatus;
 import ru.practicum.ShoppingCart.service.OrderService;
@@ -22,11 +24,11 @@ public class OrderController {
 
     @PostMapping
     @ApiOperation(value = "Создать заказ", notes = "Создание заказа")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        log.info("Запрос на создание заказа: {}", order);
-        Order createdOrder = orderService.createOrder(order);
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
+        log.info("Запрос на создание заказа: {}", orderDTO);
+        Order createdOrder = orderService.createOrder(OrderMapper.INSTANCE.toEntity(orderDTO));
         log.info("Создан заказ: {}", createdOrder);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+        return ResponseEntity.status(HttpStatus.CREATED).body(OrderMapper.INSTANCE.toDTO(createdOrder));
     }
 
     @DeleteMapping("/{id}")
@@ -40,20 +42,20 @@ public class OrderController {
 
     @PutMapping("/{id}/status")
     @ApiOperation(value = "Поменять статус заказа", notes = "Получение всех товаров, у которых поле InStock = true")
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @RequestParam("status") String status) {
+    public ResponseEntity<OrderDTO> updateOrderStatus(@PathVariable Long id, @RequestParam("status") String status) {
         log.info("Запрос на изменение статуса заказа с id: {}", id);
         OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
         Order updatedOrder = orderService.changeOrderStatus(id, orderStatus);
         log.info("Статус заказа с id {} изменен на {}", id, orderStatus);
-        return ResponseEntity.ok(updatedOrder);
+        return ResponseEntity.ok(OrderMapper.INSTANCE.toDTO(updatedOrder));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Отобразить заказ по id", notes = "Отображение заказа по его id")
-    public Order getOrderById(@PathVariable Long id) {
+    public OrderDTO getOrderById(@PathVariable Long id) {
         log.info("Запрос на получение заказа с id: {}", id);
         Order order = orderService.getOrderById(id);
         log.info("Заказ с id {} успешно получен", id);
-        return order;
+        return OrderMapper.INSTANCE.toDTO(order);
     }
 }

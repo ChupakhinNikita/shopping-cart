@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService{
 
     // - для orders – создать заказ
     public Order createOrder(Order order) {
-        log.info("Создание заказа");
+        log.info("Создание заказа {}", order);
         // Преобразование OrderDTO в Order с использованием маппера
 
         // Получение покупателя по его идентификатору

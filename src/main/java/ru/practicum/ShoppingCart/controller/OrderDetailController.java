@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ShoppingCart.dto.OrderDetailDTO;
+import ru.practicum.ShoppingCart.mapper.OrderDetailMapper;
+import ru.practicum.ShoppingCart.mapper.OrderMapper;
 import ru.practicum.ShoppingCart.model.OrderDetail;
 import ru.practicum.ShoppingCart.service.OrderDetailService;
 
@@ -24,11 +26,11 @@ public class OrderDetailController {
 
     @PostMapping
     @ApiOperation(value = "Добавить позицию", notes = "Добавление подробной информации о заказе")
-    public ResponseEntity<OrderDetail> addOrderDetail(@RequestBody OrderDetail orderDetail) {
-        log.info("Запрос на добавление позиции: {}", orderDetail);
-        OrderDetail addedOrderDetail = orderDetailService.addOrderDetail(orderDetail);
+    public ResponseEntity<OrderDetailDTO> addOrderDetail(@RequestBody OrderDetailDTO orderDetailDTO) {
+        log.info("Запрос на добавление позиции: {}", orderDetailDTO);
+        OrderDetail addedOrderDetail = orderDetailService.addOrderDetail(OrderDetailMapper.INSTANCE.toEntity(orderDetailDTO));
         log.info("Позиция успешно добавлена: {}", addedOrderDetail);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedOrderDetail);
+        return ResponseEntity.status(HttpStatus.CREATED).body(OrderDetailMapper.INSTANCE.toDTO(addedOrderDetail));
     }
 
     @DeleteMapping("/{id}")
@@ -42,11 +44,11 @@ public class OrderDetailController {
 
     @GetMapping("/{orderId}/details")
     @ApiOperation(value = "Отобразить все позиции по order_id", notes = "Получение подробной информации определенного заказа")
-    public List<OrderDetail> getOrderDetailsByOrderId(@PathVariable Long orderId) {
+    public List<OrderDetailDTO> getOrderDetailsByOrderId(@PathVariable Long orderId) {
         log.info("Запрос на получение всех позиций для заказа с id: {}", orderId);
         List<OrderDetail> orders = orderDetailService.getOrderDetailsByOrderId(orderId);
         log.info("Получено {} позиций для заказа с id {}", orders.size(), orderId);
-        return orders;
+        return OrderDetailMapper.INSTANCE.toDTOs(orders);
     }
 
 }

@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ShoppingCart.dto.ProductDTO;
+import ru.practicum.ShoppingCart.mapper.ProductMapper;
 import ru.practicum.ShoppingCart.model.Product;
 import ru.practicum.ShoppingCart.service.ProductService;
 
@@ -22,10 +24,10 @@ public class ProductController {
 
     @GetMapping
     @ApiOperation(value = "Получение всех доступных товаров", notes = "Возможность вывести все товары, которые есть в наличие")
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         log.info("Запрос на получение всех доступных товаров");
         List<Product> resultProducts = productService.getAllProductsInStock();
         log.info("Получено {} товаров", resultProducts.size());
-        return resultProducts;
+        return ProductMapper.INSTANCE.toDTOs(resultProducts);
     }
 }
