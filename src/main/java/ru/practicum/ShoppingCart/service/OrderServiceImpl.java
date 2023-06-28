@@ -1,6 +1,7 @@
 package ru.practicum.ShoppingCart.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.ShoppingCart.model.Customer;
 import ru.practicum.ShoppingCart.model.Order;
@@ -13,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServiceImpl implements OrderService{
 
     private final OrderRepository orderRepository;
@@ -20,10 +22,11 @@ public class OrderServiceImpl implements OrderService{
 
     // - для orders – создать заказ
     public Order createOrder(Order order) {
+        log.info("Создание заказа");
         // Преобразование OrderDTO в Order с использованием маппера
 
         // Получение покупателя по его идентификатору
-        Customer customer = customerRepository.findById(order.getId())
+        Customer customer = customerRepository.findById(order.getCustomer().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Клиент не найден"));
 
         // Установка связи между заказом и покупателем
@@ -31,14 +34,16 @@ public class OrderServiceImpl implements OrderService{
 
         // Сохранение заказа в базе данных
         Order savedOrder = orderRepository.save(order);
+        log.info("Сохранение заказа в базе данных");
 
         // Преобразование сохраненного заказа в OrderDTO с использованием маппера
-
+        log.info("Заказ успешно создан");
         return order;
     }
 
     // - для orders – удалить заказ
     public void deleteOrder(Long orderId) {
+        log.info("Удаление заказа");
         // Проверка существования заказа по его идентификатору
         if (!orderRepository.existsById(orderId)) {
             throw new EntityNotFoundException("Заказ не найден");
@@ -46,10 +51,12 @@ public class OrderServiceImpl implements OrderService{
 
         // Удаление заказа из базы данных
         orderRepository.deleteById(orderId);
+        log.info("Заказ успешно удален");
     }
 
     // - для orders – поменять статус заказа
     public Order changeOrderStatus(Long orderId, OrderStatus newStatus) {
+        log.info("Изменение статуса заказа");
         // Получение заказа по его идентификатору
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Заказ не найден"));
@@ -59,17 +66,19 @@ public class OrderServiceImpl implements OrderService{
 
         // Сохранение изменений в базе данных
         Order updatedOrder = orderRepository.save(order);
+        log.info("Сохранение изменений статуса в базе данных");
 
         // Преобразование обновленного заказа в OrderDTO с использованием маппера
-
+        log.info("Статус заказа успешно изменен");
         return updatedOrder;
     }
 
     // - для orders – отобразить заказ по id
     public Order getOrderById(Long orderId) {
-        // Получение заказа по его идентификатору
+        log.info("Получение заказа по идентификатору");
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Заказ не найден"));
+        log.info("Заказ получен");
 
         // Преобразование заказа в OrderDTO с использованием маппера
 
